@@ -23,6 +23,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="homehue.py" />
+    <Compile Include="qhue\qhue.py" />
+    <Compile Include="qhue\__init__.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="qhue\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
