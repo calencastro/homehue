@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>My Lamps!!!</title>
+</head>
+<body>
+    <p> {{lamphtml}} </p>
+   
+    <!-- &nbsp;||&nbsp;{lamp.state.reachable}} &nbsp;||&nbsp;{lamp.state.on}} &nbsp;||&nbsp; -->
+    {% if lamphtml != [] %}
+    {% set i = 0 %}
+    {% for lamp in lamphtml %}
+    {% set i = i + 1 %}
+    {{i}} -->&nbsp; {{lamp[0]}} 
+    {% if lamp[1] != True %}
+        &nbsp;Desconectada
+    {% else %}
+        {% if lamp[2] != True %}
+             &nbsp;<a href="/light/{{i}}/1">On</a>
+        {% else %}
+            &nbsp;&nbsp;<a href="/light/{{i}}/0">Off</a> 
+        {% endif %}
+    {% endif %}
+        <br>
+    {% endfor %}
+    {% endif %}
+
+    
+</body>
+</html>
