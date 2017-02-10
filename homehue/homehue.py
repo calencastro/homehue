@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 
 # the IP address of your bridge
-BRIDGE_IP = "172.15.30.100"
+BRIDGE_IP = "172.15.30.103"
 
 # the path for the username credentials file
 CRED_FILE_PATH = "qhue_username.txt"
@@ -29,6 +29,9 @@ def next_colour():
     Color += 1000
     if (Color > 65535):
         Color = Color - 65535
+
+def convert_to_pct(value, min = 0, max = 254):
+    return (value - min)*100/(max-min)
 
 def main():
     global bridge
@@ -78,23 +81,62 @@ def index():
     for i in bridge.lights():
         lights = bridge.lights[y+1]()
         lampada = []
+        #indice 0
         lampada.append(lights["name"])
+        #indice 1
         lampada.append(lights["state"]["reachable"])
+        #indice 2
         lampada.append(lights["state"]["on"])
-        lamp2.append(lampada)
+        #indice 3
+        lampada.append(lights["state"]["bri"])
+        #indice 4
+        lampada.append(48000)
+        #indice 5
+        try:
+            lampada.append(lights["state"]["sat"])
+        except:
+            lampada.append(0)
+        #indice 6
+        if (lights["type"] == 'Dimmable light'):
+            lampada.append(0)
+        elif (lights["type"] == 'Abiance Amarelo xxx'):
+            lampada.append(1)
+        elif (lights["type"] == 'Extended color light'):
+            lampada.append(2)
+        
+        lamp2.append(lampada)   
         y = y + 1
 
     return render_template('index.html', lamphtml = lamp2)
 
 @app.route('/light/<int:light_id>/<int:onoff>')
-def readMenu(light_id, onoff):
+def lightsOnOff(light_id, onoff):
     global bridge
     if (onoff == 1):
         bridge.lights[light_id].state(on = True)
     else:
         bridge.lights[light_id].state(on = False)
-    return render_template('index.html')
+    return redirect('/')
 
+@app.route('/bri/<int:light_id>/<int:bright>')
+def lightBright(light_id, bright):
+    global bridge
+    bridge.lights[light_id].state(bri = bright)
+    return str(convert_to_pct(bright))
+
+
+@app.route('/hue/<int:light_id>/<int:hueness>')
+def lightHue(light_id, hueness):
+    global bridge
+    bridge.lights[light_id].state(hue = hueness)
+    return str(hueness)
+
+
+@app.route('/sat/<int:light_id>/<int:saturation>')
+def lightSat(light_id, saturation):
+    global bridge
+    bridge.lights[light_id].state(sat = saturation)
+    return str(convert_to_pct(saturation))
     
 if __name__ == '__main__':
     main()

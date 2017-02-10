@@ -27,10 +27,13 @@
     <Compile Include="qhue\__init__.py" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="static\" />
     <Folder Include="templates\" />
     <Folder Include="qhue\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="static\lampoff.jpg" />
+    <Content Include="static\lampon.jpg" />
     <Content Include="templates\index.html" />
   </ItemGroup>
   <PropertyGroup>
