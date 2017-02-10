@@ -10,69 +10,69 @@
    
     <!-- &nbsp;||&nbsp;{lamp.state.reachable}} &nbsp;||&nbsp;{lamp.state.on}} &nbsp;||&nbsp; -->
     {% if lamphtml != [] %}
-    {% set i = 0 %}
-    {% for lamp in lamphtml %}
-    {% set i = i + 1 %}
-    {{i}} -->&nbsp; {{lamp[0]}} 
-    {% if lamp[1] != True %}
-        &nbsp;Desconectada
-    {% else %}
-        {% if lamp[2] != True %}
-             &nbsp;<a href="/light/{{i}}/1"><img src="{{url_for('static', filename='lampoff.jpg')}}" /></a>
-        {% else %}
-            &nbsp;&nbsp;<a href="/light/{{i}}/0"><img src="{{url_for('static', filename='lampon.jpg')}}" /></a><br />
+        {% set i = 0 %}
+        {% for lamp in lamphtml %}
+            {% set i = i + 1 %}
+            {{i}} -->&nbsp; {{lamp[0]}} 
+            {% if lamp[1] != True %}
+                &nbsp;Desconectada
+            {% else %}
+                {% if lamp[2] != True %}
+                    &nbsp;<a href="/light/{{i}}/1"><img src="{{url_for('static', filename='lampoff.jpg')}}" /></a>
+                {% else %}
+                    &nbsp;&nbsp;<a href="/light/{{i}}/0"><img src="{{url_for('static', filename='lampon.jpg')}}" /></a><br />
            
     
-     Brightness<br />
-            <input type="range" id="bri{{i}}" min="0" max="254" value="{{lamp[3]}}" /> <span id="briVal{{i}}"><script>document.write(Math.floor({{(lamp[3]*100/254)}}))</script>%</span>
-            <script>
-                var bri{{i}} = document.getElementById('bri{{i}}');
-                bri{{i}}.onchange = function() {
-                    var bright = this.value;
-                    var client = new HttpClient();
-                    client.get("/bri/{{i}}/" + bright, function(response) {
-                    // do something with response
-                        document.getElementById("briVal{{i}}").innerHTML=response + "%";
-                    });
-                }
-            </script>
+                    Brightness<br />
+                    <input type="range" id="bri{{i}}" min="0" max="254" value="{{lamp[3]}}" /> <span id="briVal{{i}}"><script>document.write(Math.floor({{(lamp[3]*100/254)}}))</script>%</span>
+                    <script>
+                        var bri{{i}} = document.getElementById('bri{{i}}');
+                        bri{{i}}.onchange = function() {
+                            var bright = this.value;
+                            var client = new HttpClient();
+                            client.get("/bri/{{i}}/" + bright, function(response) {
+                            // do something with response
+                                document.getElementById("briVal{{i}}").innerHTML=response + "%";
+                            });
+                        }
+                    </script>
 
-    {% if lamp[6] >= 2 %}
-            <br />Color<br />
-            <input type="range" id="hue{{i}}" min="0" max="65535" value="{{lamp[4]}}" step="100" /> <span id="colorVal{{i}}">{{lamp[4]}}</span>
-            <script>
-                var hue{{i}} = document.getElementById('hue{{i}}');
-                hue{{i}}.onchange = function() {
-                    var hueness = this.value;
-                    var client = new HttpClient();
-                    client.get("/hue/{{i}}/" + hueness, function(response) {
-                    // do something with response
-                        document.getElementById("colorVal{{i}}").innerHTML=response;
-                    });
-                }
-            </script>
-    {% endif %}
+                    {% if lamp[6] >= 2 %}
+                        <br />Color<br />
+                        <input type="range" id="hue{{i}}" min="0" max="65535" value="{{lamp[4]}}" step="100" /> <span id="colorVal{{i}}">{{lamp[4]}}</span>
+                        <script>
+                            var hue{{i}} = document.getElementById('hue{{i}}');
+                            hue{{i}}.onchange = function() {
+                                var hueness = this.value;
+                                var client = new HttpClient();
+                                client.get("/hue/{{i}}/" + hueness, function(response) {
+                                // do something with response
+                                    document.getElementById("colorVal{{i}}").innerHTML=response;
+                                });
+                            }
+                        </script>
+                    {% endif %}
 
-    {% if lamp[6] >= 1 %}
-    <br />Saturation<br />
-    <input type="range" id="sat{{i}}" min="0" max="254" value="{{lamp[5]}}" /><span id="satVal{{i}}"><script>document.write(Math.floor({{(lamp[5]*100/254)}}))</script>%</span>
-    <script>
-                var sat{{i}} = document.getElementById('sat{{i}}');
-                sat{{i}}.onchange = function() {
-                    var saturation = this.value;
-                    var client = new HttpClient();
-                    client.get("/sat/{{i}}/" + saturation, function(response) {
-                    // do something with response
-                        document.getElementById("satVal{{i}}").innerHTML=response + "%";
-                    });
-                }
-    </script>
-    {% endif %}
+                    {% if lamp[6] >= 1 %}
+                        <br />Saturation<br />
+                        <input type="range" id="sat{{i}}" min="0" max="254" value="{{lamp[5]}}" /><span id="satVal{{i}}"><script>document.write(Math.floor({{(lamp[5]*100/254)}}))</script>%</span>
+                        <script>
+                            var sat{{i}} = document.getElementById('sat{{i}}');
+                            sat{{i}}.onchange = function() {
+                                var saturation = this.value;
+                                var client = new HttpClient();
+                                client.get("/sat/{{i}}/" + saturation, function(response) {
+                                // do something with response
+                                    document.getElementById("satVal{{i}}").innerHTML=response + "%";
+                                });
+                            }
+                        </script>
+                    {% endif %}
 
-        {% endif %}
-    {% endif %}
+                {% endif %}
+            {% endif %}
         <br>
-    {% endfor %}
+        {% endfor %}
     {% endif %}
 
     <script>
@@ -90,7 +90,7 @@
         }
         
 
-</script>
+    </script>
 
-</body>
+  </body>
 </html>
