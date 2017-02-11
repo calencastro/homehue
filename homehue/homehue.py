@@ -63,12 +63,7 @@ def main():
     # query the API and print the results
     print lights()
 
-    # query the API and print the results
-    #while True:
-    #    bridge.lights[3].state(bri=254, hue=Color)
-    #    print Color
-    #    msleep(100)
-    #    next_colour()
+
 
 
 
