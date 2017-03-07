@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import time
 import json
+import requests
 from os import path
 from qhue import Bridge, QhueException, create_new_username
 
@@ -11,7 +12,7 @@ app = Flask(__name__)
 
 
 # the IP address of your bridge
-BRIDGE_IP = "172.15.30.105"
+BRIDGE_IP = "172.15.30.100"
 
 # the path for the username credentials file
 CRED_FILE_PATH = "qhue_username.txt"
@@ -23,6 +24,15 @@ Color = 0
 global bridge
 
 
+def getBridgeIP():
+    url = "https://www.meethue.com/api/nupnp"
+    try:
+        json_data = requests.get(url).json()
+        return json_data[0]["internalipaddress"]
+    except:
+        return BRIDGE_IP
+    
+
 def next_colour():
     global Color
     
@@ -31,7 +41,7 @@ def next_colour():
         Color = Color - 65535
 
 def convert_to_pct(value, min = 0, max = 254):
-    return (value - min)*100/(max-min)
+    return (value - min)*100//(max-min)
 
 def main():
     global bridge
@@ -54,8 +64,9 @@ def main():
         with open(CRED_FILE_PATH, "r") as cred_file:
             username = cred_file.read()
 
+    print(getBridgeIP())
     # create the bridge resource, passing the captured username
-    bridge = Bridge(BRIDGE_IP, username)
+    bridge = Bridge(getBridgeIP(), username)
     
     # create a lights resource
     lights = bridge.lights
