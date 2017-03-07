@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 
 # the IP address of your bridge
-BRIDGE_IP = "172.15.30.103"
+BRIDGE_IP = "172.15.30.105"
 
 # the path for the username credentials file
 CRED_FILE_PATH = "qhue_username.txt"
@@ -44,7 +44,7 @@ def main():
                 username = create_new_username(BRIDGE_IP)
                 break
             except QhueException as err:
-                print "Error occurred while creating a new username: {}".format(err)
+                print ("Error occurred while creating a new username: %s" % err)
 
         # store the username in a credential file
         with open(CRED_FILE_PATH, "w") as cred_file:
@@ -61,7 +61,7 @@ def main():
     lights = bridge.lights
 
     # query the API and print the results
-    print lights()
+    print (lights())
 
 
 

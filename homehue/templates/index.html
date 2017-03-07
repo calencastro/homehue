@@ -3,15 +3,14 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title>My Lamps!!!</title>
+    <title>My Home Hue Lamps</title>
 </head>
 <body>
     <p> {{lamphtml}} </p>
    
     {% if lamphtml != [] %}
-        {% set i = 0 %}
         {% for lamp in lamphtml %}
-            {% set i = i + 1 %}
+            {% set i = loop.index %}
             {{i}} -->&nbsp; {{lamp[0]}} 
             {% if lamp[1] != True %}
                 &nbsp;Desconectada
